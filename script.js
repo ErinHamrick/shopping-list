@@ -4,6 +4,7 @@ const itemList = document.getElementById('item-list');
 const clearBtn = document.getElementById('clear');
 const filter = document.getElementById('filter');
 
+
 function addItem(e) {
 	e.preventDefault();
 
@@ -21,8 +22,10 @@ function addItem(e) {
 	li.appendChild(button);
 
 	itemList.appendChild(li);
+    checkUI();
 
 	itemInput.value = '';
+    
 }
 
 function createButton(classes) {
@@ -50,9 +53,24 @@ function clearItems() {
 	while (itemList.firstChild) {
 		itemList.removeChild(itemList.firstChild);
 	}
+	checkUI();
+}
+
+function checkUI() {
+    const items = itemList.querySelectorAll('li');
+	if (items.length === 0) {
+		clearBtn.style.display = 'none';
+		filter.style.display = 'none';
+	} else {
+        clearBtn.style.display = 'block';
+        filter.style.display = 'block';
+
+    }
 }
 
 // Event Listeners
 itemForm.addEventListener('submit', addItem);
 itemList.addEventListener('click', removeItem);
 clearBtn.addEventListener('click', clearItems);
+
+checkUI();
